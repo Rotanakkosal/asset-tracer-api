@@ -4,7 +4,7 @@ pipeline {
           DOCKER_IMAGE = "asset-tracer-api"
      }
      tools{
-          maven 'maven'
+          maven 'Maven'
      }
      stages{
             stage("Checkout") {
