@@ -12,7 +12,7 @@ pipeline {
 
                     echo "adding $USER to docker group"
                     echo "Building Docker Image"
-                    sh "ocker build -t asset-tracer-api ."
+                    sh "docker build -t asset-tracer-api ."
                }
           }
           stage("Test"){
