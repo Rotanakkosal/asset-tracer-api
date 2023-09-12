@@ -1,18 +1,25 @@
 pipeline {
      agent any
+     environment{
+          DOCKER_IMAGE = "asset-tracer-api"
+     }
      tools{
-          maven 'Maven'
+          maven 'maven'
      }
      stages{
+            stage("Checkout") {
+            steps {
+                // Checkout the source code from the Git repository
+                checkout scm
+            }
+        }
           stage("Build"){
                steps{
                     echo "Building..."
-                    sh "java -version"
                     sh "mvn clean install -Dmaven.test.skip=true"
-
-                    echo "adding $USER to docker group"
+                    
                     echo "Building Docker Image"
-                    sh "docker build -t asset-tracer-api ."
+                    sh "docker build -t \${DOCKER_IMAGE} ."
                }
           }
           stage("Test"){
@@ -23,7 +30,9 @@ pipeline {
           stage("Deploy"){
                steps{
                     echo "Deploying using Docker run"
-                    sh "docker run -d -p 8090:8080 --name asset-tracer-api asset-tracer-api"
+                    sh "docker run -d -p 8090:8080 --name \${DOCKER_IMAGE} \${DOCKER_IMAGE}  "
+                    echo " docker ps"
+                    echo "docker ps | grep \${DOCKER_IMAGE} "
                }
           }
      }
