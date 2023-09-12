@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Verify Account</title>
+</head>
+<body>
+<p>
+    Hello , <br>
+    Please click the link below to confirm your email and complete the registration process. <br>
+    You will be automatically redirected to a welcome page where you can then sign in.
+</p>
+<p>Follow this link to verify your email address</p>
+<!--<a th:href="${link}"><p th:text="${link}"></p></a>-->
+
+<a th:href="@{http://assettracer.net/signin(code=${code})}">Click to Verify</a>
+
+<input type="hidden" id="verification-link" th:value="${link}">
+<!--<p>Your email: <span th:text="${email}"></span> </p>-->
+<p>If this was a mistake, just ignore this email and nothing will happen.</p>
+<p>Team Asset Tracer</p>
+<a>assettracerteam@gmail.com</a>
+
+</body>
+</html>
