@@ -29,6 +29,10 @@ pipeline {
           }
           stage("Deploy"){
                steps{
+                    script{
+                           echo " Remove the exist container \${docker ps | grep \${DOCKER_IMAGE}}"
+                              sh "docker rm -f \${DOCKER_IMAGE}"
+                    }
                     echo "Deploying using Docker run"
                     sh "docker run -d -p 8090:8080 --name \${DOCKER_IMAGE} \${DOCKER_IMAGE}  "
                     echo " docker ps"
