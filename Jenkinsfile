@@ -28,22 +28,24 @@ pipeline {
                     echo " Ot Dg Test Mx Te *_*"
                }
           }
-          stage("Deploy"){
-               steps{
-                    script{
-                              def containerId = sh(script: 'docker ps -aq -f name="${DOCKER_IMAGE}"', returnStatus: true)
-                              echo "containerId : ${containerId}"
-                              if(containerId ==0){
-                                   echo "Removing existing container ${containerId}"
-                                   sh "docker rm -f $(docker ps -aq -f name="\${DOCKER_IMAGE}")
-                              }else{
-                                   echo "No existing container found."
-                                   echo "Deploying container..."
-                                   sh "docker run -d -p 8090:8080 --name \${DOCKER_IMAGE} \${DOCKER_IMAGE}  "
-                                   sh "docker ps | grep \${DOCKER_IMAGE} "
-                              }
+          stage("Deploy") {
+               steps {
+                    script {
+                         def containerId = sh(script: 'docker ps -q -f name="${DOCKER_IMAGE}"', returnStatus: false, returnStdout: true).trim()
+                         
+                         if (containerId) {
+                              echo "Removing existing container ${containerId}"
+                              sh "docker rm -f ${containerId}"
+                         } else {
+                              echo "No existing container found."
                          }
+
+                         echo "Deploying container..."
+                         sh "docker run -d -p 8090:8080 --name \${DOCKER_IMAGE} \${DOCKER_IMAGE}"
+                         sh "docker ps | grep \${DOCKER_IMAGE}"
                     }
                }
+          }
+
      }
 }
