@@ -31,11 +31,12 @@ pipeline {
           stage("Deploy") {
                steps {
                     script {
-                         def containerId = sh(script: 'docker ps -q -f name="${DOCKER_IMAGE}"', returnStatus: false, returnStdout: true)
+                         def existingContainerId = sh(script: 'docker ps -q -f name="${DOCKER_IMAGE}"', returnStatus: false, returnStdout: true)
                          
-                         if (containerId) {
-                              echo "Removing existing container ${containerId}"
-                              sh "docker rm -f ${containerId}"
+                         if (existingContainerId) {
+                              echo "Stopping and removing existing container ${existingContainerId}"
+                              sh "docker stop ${existingContainerId}"
+                              sh "docker rm ${existingContainerId}"
                          } else {
                               echo "No existing container found."
                          }
@@ -45,7 +46,8 @@ pipeline {
                          sh "docker ps | grep \${DOCKER_IMAGE}"
                     }
                }
-          }
+               }
+
 
      }
 }
