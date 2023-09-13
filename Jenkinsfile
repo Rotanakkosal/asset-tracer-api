@@ -32,11 +32,10 @@ pipeline {
                steps {
                     script {
                          def existingContainerId = sh(script: 'docker ps -aq -f name="${DOCKER_IMAGE}"', returnStatus: false, returnStdout: true)
-                         
+                         echo "existingContainerId : ${existingContainerId}"
                          if (existingContainerId) {
-                              echo "Stopping and removing existing container ${existingContainerId}"
-                              sh "docker stop ${existingContainerId}"
-                              sh "docker rm ${existingContainerId}"
+                              echo "Removing existing container ${existingContainerId}"
+                              sh "docker rm -f ${existingContainerId}"
                          } else {
                               echo "No existing container found."
                          }
@@ -47,7 +46,5 @@ pipeline {
                     }
                }
                }
-
-
      }
 }
