@@ -35,7 +35,7 @@ pipeline {
                               echo "containerId : ${containerId}"
                               if(containerId ==0){
                                    echo "Removing existing container ${containerId}"
-                                   sh "docker rm -f $('docker ps -aq -f name="${DOCKER_IMAGE}"')
+                                   sh "docker rm -f $(docker ps -aq -f name="${DOCKER_IMAGE}")
                               }else{
                                    echo "No existing container found."
                                    echo "Deploying container..."
