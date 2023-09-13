@@ -31,7 +31,7 @@ pipeline {
           stage("Deploy"){
                steps{
                     script{
-                              def containerId = sh(script: 'docker ps -aq -f name="${DOCKER_IMAGE}"',returnStatus: true)
+                              def containerId = sh(script: 'docker ps -aq -f name="${DOCKER_IMAGE}"',returnStatus: true,returnStdout: true)
                               echo "containerId : ${containerId}"
                               if(containerId){
                                    echo "Removing existing container ${containerId}"
