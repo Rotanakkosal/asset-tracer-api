@@ -32,7 +32,7 @@ pipeline {
                steps{
                     script{     
                               def containerId = sh(script: 'docker ps -aq -f name="${DOCKER_IMAGE}"').trim()
-                              #def containerStatus = sh(script: ${containerId}, returnStatus: true)
+                            
                               echo "containerId : ${containerId}"
                               if(containerId == 0){
                                    echo "Removing existing container ${containerId}"
