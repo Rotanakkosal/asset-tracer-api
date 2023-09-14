@@ -1,6 +1,8 @@
 #!/usr/bin/env groovy
 pipeline {
-     agent any
+     agent {
+          label agent125
+     }
      environment{
           DOCKER_IMAGE = "asset-tracer-api"
      }
