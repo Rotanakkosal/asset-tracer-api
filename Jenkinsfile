@@ -41,7 +41,7 @@ pipeline {
                          }
 
                          echo "Deploying container..."
-                         sh "docker run -d -p 8090:8080 --name \${DOCKER_IMAGE} \${DOCKER_IMAGE}"
+                         sh "docker run -d -p 8070:8080 --name \${DOCKER_IMAGE} \${DOCKER_IMAGE}"
                          sh "docker ps | grep \${DOCKER_IMAGE}"
                     }
                }
